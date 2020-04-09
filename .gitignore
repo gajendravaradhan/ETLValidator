@@ -1,0 +1,9 @@
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+
+build/
+!**/src/main/**
+!**/src/test/**
