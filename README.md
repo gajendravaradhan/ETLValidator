@@ -1,3 +1,5 @@
+[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/tterb/atomic-design-ui/blob/master/LICENSEs)
+
 # ETL Validator
 
 ETL Validator is a tool that can read data files, perform transformations on them and compare them against any similar datasets. It uses Google Guice for data injection.
