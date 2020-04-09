@@ -2,38 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a87ee7bc-bd43-419a-a319-935ce37cdf5b" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dbnavigator.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/checkstyle.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/application/ETLEngine.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/application/Orchestrator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/business/extract/DataExtractor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/business/extract/DataExtractorImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/business/peripherals/CustomValidationException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/business/peripherals/DataTransformationException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/business/peripherals/MetaValidator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/business/report/Reporter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/business/report/ReporterImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/business/transform/DataTransformer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/business/transform/DataTransformerImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/business/validate/Validator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/business/validate/ValidatorImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/infrastructure/AppModule.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/infrastructure/ETLContext.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/expected.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/output/_SUCCESS" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/output/result.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/transaction_core.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/transaction_core_lot.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/transformation_queries.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -93,8 +63,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/business/validate/ValidatorImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="25" column="26" lean-forward="true" selection-start-line="25" selection-start-column="26" selection-end-line="25" selection-end-column="26" />
+            <state relative-caret-position="102">
+              <caret line="20" column="7" lean-forward="true" selection-start-line="20" selection-start-column="7" selection-end-line="20" selection-end-column="7" />
               <folding>
                 <element signature="e#2838#2846#0" expanded="true" />
               </folding>
@@ -248,6 +218,17 @@
               <item name="SparkBDD" type="b2602c69:ProjectViewProjectNode" />
               <item name="SparkBDD" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="SparkBDD" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SparkBDD" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="SparkBDD" type="b2602c69:ProjectViewProjectNode" />
+              <item name="SparkBDD" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -312,7 +293,24 @@
       <option name="presentableId" value="Default" />
       <updated>1586373517869</updated>
     </task>
+    <task id="LOCAL-00001" summary="initial Commit">
+      <created>1586449550092</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1586449550092</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="TodoView" selected-index="4">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="838" extended-state="6" />
@@ -320,7 +318,7 @@
       <window_info id="DB Browser" />
       <window_info id="Project Explorer" />
       <window_info id="Job Explorer" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2533512" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2533512" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -333,9 +331,9 @@
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39886847" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info active="true" anchor="bottom" id="TODO" order="6" visible="true" weight="0.32956153" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32956153" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="8" weight="0.32956153" />
+      <window_info anchor="bottom" id="Terminal" order="8" visible="true" weight="0.32956153" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -636,8 +634,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/business/validate/ValidatorImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="25" column="26" lean-forward="true" selection-start-line="25" selection-start-column="26" selection-end-line="25" selection-end-column="26" />
+        <state relative-caret-position="102">
+          <caret line="20" column="7" lean-forward="true" selection-start-line="20" selection-start-column="7" selection-end-line="20" selection-end-column="7" />
           <folding>
             <element signature="e#2838#2846#0" expanded="true" />
           </folding>
