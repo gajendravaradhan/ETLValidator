@@ -1,5 +1,3 @@
-[build](https://img.shields.io/static/v1?label=passing&message=<MESSAGE>&color=<COLOR>)
-
 # Onboarding Calculation Engine
 
 Hadron onboarding project for Spark Calculation Engine. It takes a JSON transaction core file and merges it with the transaction core lot file to produce a transaction core summary file.
