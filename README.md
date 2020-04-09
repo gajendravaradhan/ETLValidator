@@ -1,6 +1,6 @@
-# Onboarding Calculation Engine
+# ETL Validator
 
-Hadron onboarding project for Spark Calculation Engine. It takes a JSON transaction core file and merges it with the transaction core lot file to produce a transaction core summary file.
+ETL Validator is a tool that can read data files, perform transformations on them and compare them against any similar datasets. It uses Google Guice for data injection.
 It is divided into 3 stages, 
 <ul>
 <li>Extract</li>
@@ -10,16 +10,13 @@ It is divided into 3 stages,
 
 ## Installation
 
-git clone the project using:
-```gitexclude
-git@gitlab.awstrp.net:trpho94/onboarding-oms.git
-```
+Clone the project from github.
 
 ## Components
 
 #### Data Extractor
 
-Data extractor is responsible for reading data from json and csv files using spark. Before reading, the files are validated by the Data Validator.
+Data extractor is responsible for reading data from json,csv,excel, or sql tables. Before reading, the files are validated by the Data Validator.
 
 #### Data Validator
 
@@ -32,23 +29,34 @@ Data Validator validates the incoming file if it:
 
 #### Data Transformation
 
-This is where the business logic of joining and filtering the transaction core and transaction core lot to generate the transaction core summary.
+This is where all the the business logic of data transformations happen. Any custom transformation you need should go in here as methods.
 
-**Calculation Requirement**
+#### Reporter
 
-**Attribute:** transaction_lot_total_amount
+This is where the calculated result is written to a file in output directory. You can write outputs to different file formats including:
 
-**Filter logic:** transaction_code is 'CGDLT' or 'CGDST'
+<ul>
+<li>JSON</li>
+<li>CSV</li>
+<li>EXCEL</li>
+<li>PARQUET</li>
+<li>ORC</li> 
+<li>SQL Tables (Most common databases athat have APIs to connect with Java code)</li>  
+</ul>
 
-**Calculation logic:** the sum of the values of transaction_lot_amount
+#### Validator
 
-#### Data Loading
+This is where the comparison of two datasets happen. I have provided two ways to compare datasets
+<ul>
+<li>Compare data row by row</li>
+<li>Compare data column by column</li>
+</ul>
 
-This is where the calculated result is written to a file in output directory.
+In both the cases, I show the reports with the primary key so that it will be easier to know which records have mismatch between source and target.
 
 #### Orchestration
 
-All this is orchestrated by the CalculationOrchestrator class which orchestrates the *'ETL'* process.
+All this is orchestrated by the Orchestrator class which orchestrates the *'ETL'* process.
 
 ## Guice Injection
 
@@ -56,14 +64,19 @@ All this is orchestrated by the CalculationOrchestrator class which orchestrates
 
 the App module class is responsible for the Guice binding of the ETL interfaces to their implementation. It also takes care of the named binding of the properties from config.properties class
 
-#### CalculationEngine
+#### ETLEngine
 
 This is the main class that provides Guice injection to the Orchestrator and triggers the ETL process.
 
+____________________________________________________________________________________________________________________________________
+
+## Sample Project Demo
+**ETL**
+Takes two input files one json and another csv. Merges the two based on the id field and groups the amount for each of the transaction codes. Shows the sum only if the code is specifically "CGDLT" or CGDST". Shows null otherwise
+
+**Validation**
+We validate this transformation by comparing the result with an expected file **expected.json**
+
 ## Usage
 
-```bash
-gradle clean
-gradle build
-
-```
+Run the ETLEngine class
