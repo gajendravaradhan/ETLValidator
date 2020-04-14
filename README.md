@@ -7,7 +7,7 @@ It is divided into 3 stages,
 <ul>
 <li>Extract</li>
 <li>Transform</li>
-<li>Load</li>
+<li>Validate</li>
 </ul>
 
 ## Installation
