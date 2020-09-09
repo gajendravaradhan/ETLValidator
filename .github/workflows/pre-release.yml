@@ -1,17 +1,12 @@
 # This workflow will build a Java project with Maven
 # For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
 
-name: Feature push
+name: Pre-release
 
 on:
   push:
     branches:
-      - '*'
-      - '!master'
-    paths:
-      - 'src/**'
-      - 'pom.xml'
-      - '.github/**'
+      - master
 jobs:
 
   test:
@@ -39,4 +34,20 @@ jobs:
           restore-keys: ${{ runner.os }}-m2
 
       - name: Build with Maven
-        run: mvn clean verify --file pom.xml
+        run: mvn -B package --file pom.xml
+
+      - name: Publish to GitHub Packages Apache Maven
+        run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Pre-Release Activities
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: true
+          title: "Pre Release Build"
+          files: |
+            README.md
+            *.jar
