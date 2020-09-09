@@ -1,7 +1,7 @@
 package business.extract;
 
-import business.peripherals.CustomValidationException;
 import business.peripherals.MetaValidator;
+import business.peripherals.exceptions.CustomValidationException;
 import infrastructure.ETLContext;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
@@ -9,6 +9,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.lang.invoke.MethodHandles;
+import java.util.Properties;
 
 /**
  * The type Data extractor.
@@ -16,34 +18,64 @@ import java.io.IOException;
 
 public class DataExtractorImpl implements DataExtractor {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DataExtractorImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
-
-    public Dataset<Row> readcsv(String path, Boolean header) throws IOException, CustomValidationException {
-        MetaValidator.validateFile(path,"csv");
-        LOGGER.debug("File Meta Validation completed!");
+    public Dataset<Row> loadFromDBTableWithCredentials(String url, String tableName, String username, String password) {
+        Properties connectionProperties = new Properties();
+        connectionProperties.put("user", username);
+        connectionProperties.put("password", password);
         return ETLContext.getETLContext().getSession()
                 .read()
-                .format("csv")
-                .option("header",header)
-                .load(path);
-    }
-
-    public Dataset<Row> readJson(String path) throws IOException, CustomValidationException {
-        MetaValidator.validateFile(path,"json");
-        LOGGER.debug("File Meta Validation completed!");
-        return ETLContext.getETLContext().getSession()
-                .read()
-                .json(path);
+                .jdbc(url, tableName, connectionProperties);
     }
 
     public Dataset<Row> readExcel(String path, String sheetName) throws IOException, CustomValidationException {
-        MetaValidator.validateFile(path,"excel");
-        LOGGER.debug("File Meta Validation completed!");
-        return null;
+        if (!MetaValidator.validateFile(path, "application/vnd")) {
+            String error = "File Meta Validation failed!";
+            LOGGER.error(error);
+            throw new CustomValidationException(error);
+        } else {
+            LOGGER.debug("File Meta Validation completed!");
+            return ETLContext.getETLContext().getSession().read()
+                    .format("com.crealytics.spark.excel")
+                    .option("sheetName", sheetName)
+                    .option("useHeader", "true")
+                    .option("treatEmptyValuesAsNulls", "true")
+                    .option("inferSchema", "true")
+                    .option("addColorColumns", "False")
+                    .load(path);
+        }
     }
 
-    public Dataset<Row> loadFromDBTable(String url, String tableName) throws IOException, CustomValidationException {
+    public Dataset<Row> readJson(String path) throws IOException, CustomValidationException {
+        if (!MetaValidator.validateFile(path, "json")) {
+            String error = "File Meta Validation failed!";
+            LOGGER.error(error);
+            throw new CustomValidationException(error);
+        } else {
+            LOGGER.debug("File Meta Validation completed!");
+            return ETLContext.getETLContext().getSession()
+                    .read()
+                    .json(path);
+        }
+    }
+
+    @Override
+    public Dataset<Row> readORC(String path) {
+        return ETLContext.getETLContext().getSession()
+                .read()
+                .format("orc")
+                .load(path);
+    }
+
+    @Override
+    public Dataset<Row> readParquet(String path) {
+        return ETLContext.getETLContext().getSession()
+                .read()
+                .parquet(path);
+    }
+
+    public Dataset<Row> loadFromDBTable(String url, String tableName) {
         return ETLContext.getETLContext().getSession()
                 .read()
                 .format("jdbc")
@@ -52,7 +84,22 @@ public class DataExtractorImpl implements DataExtractor {
                 .load();
     }
 
-    public Dataset<Row> loadFromDBTableUsingQuery(String url, String query) throws IOException, CustomValidationException {
+    public Dataset<Row> readcsv(String path, Boolean header) throws IOException, CustomValidationException {
+        if (!MetaValidator.validateFile(path, "csv")) {
+            String error = "File Meta Validation failed!";
+            LOGGER.error(error);
+            throw new CustomValidationException(error);
+        } else {
+            LOGGER.debug("File Meta Validation completed!");
+            return ETLContext.getETLContext().getSession()
+                    .read()
+                    .format("csv")
+                    .option("header", header)
+                    .load(path);
+        }
+    }
+
+    public Dataset<Row> loadFromDBTableUsingQuery(String url, String query) {
         return ETLContext.getETLContext().getSession()
                 .read()
                 .format("jdbc")

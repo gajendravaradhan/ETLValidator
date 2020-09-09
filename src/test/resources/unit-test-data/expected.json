@@ -1,0 +1,35 @@
+{"transaction_unique_identifier":6,"transaction_code":"IMPSR"}
+{
+  "transaction_unique_identifier": 5,
+  "transaction_code": "TESTING"
+}
+{
+  "transaction_unique_identifier": 3,
+  "transaction_code": "CGDLT",
+  "transaction_lot_amount": 225.0
+}
+{
+  "transaction_unique_identifier": 4,
+  "transaction_code": "CGDST",
+  "transaction_lot_amount": 189.0
+}
+{
+  "transaction_unique_identifier": 7,
+  "transaction_code": "TQSRT"
+}
+{"transaction_unique_identifier":10,"transaction_code":"GJEOR"}
+{
+  "transaction_unique_identifier": 8,
+  "transaction_code": "DTRTD"
+}
+{"transaction_unique_identifier":9,"transaction_code":"QRPDT"}
+{
+  "transaction_unique_identifier": 2,
+  "transaction_code": "CGDST",
+  "transaction_lot_amount": 245.0
+}
+{
+  "transaction_unique_identifier": 1,
+  "transaction_code": "CGDLT",
+  "transaction_lot_amount": 213.0
+}

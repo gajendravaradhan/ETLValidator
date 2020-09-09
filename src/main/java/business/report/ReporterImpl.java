@@ -17,14 +17,14 @@ public class ReporterImpl implements Reporter {
      * @param dataset  the dataset
      * @param path     the path
      * @param fileName the file name
-     * @param fileType
+     * @param fileType the file type
      * @throws IOException the io exception
      */
     public void writeDataSet(Dataset<Row> dataset, String path, String fileName, String fileType) throws IOException {
         DataFrameWriter<Row> dataFrameWriter = dataset.repartition(1)
                 .write()
                 .mode(SaveMode.Overwrite);
-        switch(fileType.toUpperCase()) {
+        switch (fileType.toUpperCase()) {
             case "JSON":
                 dataFrameWriter.json(path);
                 break;
@@ -38,12 +38,18 @@ public class ReporterImpl implements Reporter {
                 dataFrameWriter.parquet(path);
                 break;
             case "SQL":
-                dataFrameWriter.jdbc(path, fileName,null);
+                dataset.write()
+                        .format("jdbc")
+                        .option("url", path)
+                        .option("dbtable", fileName)
+                        .save();
+
                 break;
             default:
-                dataFrameWriter.format(fileType).save(path+"/"+fileName);
+                dataFrameWriter.format(fileType).save(path + "/" + fileName);
         }
-        renamePartitionFiles(path,"part-0000*.json", "result.json");
+        if (!fileType.equalsIgnoreCase("SQL"))
+            renamePartitionFiles(path, "part-0000*." + fileType, fileName);
     }
 
     /**
@@ -57,9 +63,9 @@ public class ReporterImpl implements Reporter {
     public void renamePartitionFiles(String path, String src, String dst) throws IOException {
         FileSystem fs = FileSystem.get(ETLContext.getETLContext().getSession().sparkContext().hadoopConfiguration());
         String name = fs.globStatus(new Path(path + src))[0].getPath().getName();
-        fs.rename(new Path(path + name),new Path(path + dst));
-        fs.delete(new Path(path + "._SUCCESS.crc"),true);
-        fs.delete(new Path(path + "." + dst + ".crc"),true);
-        fs.delete(new Path(path + "._SUCCESS"),true);
+        fs.rename(new Path(path + name), new Path(path + dst));
+        fs.delete(new Path(path + "._SUCCESS.crc"), true);
+        fs.delete(new Path(path + "." + dst + ".crc"), true);
+        fs.delete(new Path(path + "._SUCCESS"), true);
     }
 }
