@@ -18,7 +18,7 @@ import java.lang.invoke.MethodHandles;
         glue = {"application", "business"}
 )
 @Test
-public class FunctionalCukesTest extends AbstractTestNGCucumberTests {
+public class ETLCukesTest extends AbstractTestNGCucumberTests {
     private static final Logger LOGGER = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     @AfterClass
