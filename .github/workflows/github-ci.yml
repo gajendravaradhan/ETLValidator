@@ -6,7 +6,6 @@ name: Pre-Merge CI/CD
 on:
   push:
     branches:
-      - '*'
       - '!master'
     paths:
       - 'src/**'
