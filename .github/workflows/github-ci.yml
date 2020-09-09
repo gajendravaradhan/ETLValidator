@@ -5,8 +5,8 @@ name: Pre-Merge CI/CD
 
 on:
   push:
-    branches:
-      - '!master'
+    branches-ignore:
+      - 'master'
     paths:
       - 'src/**'
       - 'pom.xml'
