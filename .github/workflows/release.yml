@@ -6,7 +6,7 @@ name: Tagged Release
 on:
   push:
     tags:
-      - "v*"
+      - "release"
 
 jobs:
   tagged-release:
@@ -25,4 +25,4 @@ jobs:
           prerelease: false
           files: |
             README.md
-            *.jar
+            **/ETL*dependencies*.jar
