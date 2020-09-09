@@ -3,7 +3,6 @@ package business.transform;
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
-import scala.collection.JavaConverters;
 import scala.collection.Seq;
 
 import java.util.List;
@@ -18,9 +17,10 @@ public interface DataTransformer {
      *
      * @param transactionCore    the transaction core
      * @param transactionCoreLot the transaction core lot
+     * @param calculationQuery   the calculation query
      * @return the dataset
      */
-    Dataset<Row> calculateTransactionCoreSummary (Dataset<Row> transactionCore, Dataset<Row> transactionCoreLot, String calculationQuery);
+    Dataset<Row> calculateTransactionCoreSummary(Dataset<Row> transactionCore, Dataset<Row> transactionCoreLot, String calculationQuery);
 
     /**
      * For a given column in Dataset, replace all blanks with the given string.
@@ -31,7 +31,7 @@ public interface DataTransformer {
      * @param replacement the replacement
      * @return the column
      */
-    public Column columnSearchAndReplace(String column, Dataset<Row> temp, String toReplace, String replacement);
+    Column columnSearchAndReplace(String column, Dataset<Row> temp, String toReplace, String replacement);
 
 
     /**
@@ -40,5 +40,13 @@ public interface DataTransformer {
      * @param inputList the input list
      * @return the seq
      */
-    public Seq<String> convertListToSeq(List<String> inputList);
+    Seq<String> convertListToSeq(List<String> inputList);
+
+    /**
+     * Count rows for the give dataset.
+     *
+     * @param dataset the dataset
+     * @return the long
+     */
+    long countRows(Dataset<Row> dataset);
 }

@@ -1,19 +1,39 @@
 package business.validate;
 
-import business.peripherals.DataTransformationException;
-import org.apache.spark.sql.Column;
+import business.peripherals.exceptions.DataTransformationException;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
-import org.apache.spark.sql.functions;
-import scala.collection.JavaConverters;
-import scala.collection.Seq;
-
-import java.util.List;
 
 /**
  * The interface Validator.
  */
 public interface Validator {
+
+    /**
+     * Assert row count matches the expected dataset.
+     *
+     * @param expected the expected
+     * @param actual   the actual
+     */
+    void assertRowCount(Dataset<Row> expected, Dataset<Row> actual);
+
+    /**
+     * Assert that the two dataset schemas match
+     *
+     * @param expected source dataset
+     * @param actual target dataset
+     */
+    void assertSchemaMatches(Dataset<Row> expected, Dataset<Row> actual);
+
+    /**
+     * Compare two dataset with same schema by columns given a common column.
+     *
+     * @param expected   the source dataset
+     * @param actual     the target dataset
+     * @param primaryKey the target dataset
+     * @return the dataset
+     */
+    Dataset<Row> compareByColumn(Dataset<Row> expected, Dataset<Row> actual, String primaryKey) throws DataTransformationException;
 
     /**
      * Compare two similarly structured dataset.
@@ -23,8 +43,5 @@ public interface Validator {
      * @return the dataset
      * @throws DataTransformationException the data transformation exception
      */
-    public Dataset<Row> compareDatasets(Dataset<Row> expected, Dataset<Row> actual) throws DataTransformationException;
-
-    Dataset<Row> compareByColumn(Dataset<Row> expected, Dataset<Row> actual,  String primaryKey) throws DataTransformationException;
-
+    Dataset<Row> compareDatasets(Dataset<Row> expected, Dataset<Row> actual) throws DataTransformationException;
 }

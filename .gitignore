@@ -7,3 +7,4 @@ out/
 build/
 !**/src/main/**
 !**/src/test/**
+target/

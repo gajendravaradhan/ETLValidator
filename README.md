@@ -2,27 +2,28 @@
 
 # ETL Validator
 
-ETL Validator is a tool that can read data files, perform transformations on them and compare them against any similar datasets. It uses Google Guice for data injection.
-It is divided into 3 stages, 
+ETL Validator is a tool that can read data files, perform transformations on them and compare them against any similar data sets. It supports Cucumber BDD based steps for writing anything from simple to complex data manipulation processes on data sets of any size. It has a set of prebuilt steps to read, write and compare data sets
+It is divided into 4 stages, 
 <ul>
 <li>Extract</li>
 <li>Transform</li>
+<li>Report</li>
 <li>Validate</li>
 </ul>
 
 ## Installation
 
-Clone the project from github.
+It can be run as a standalone Cucumber Java BDD project or be integrated with your existing framework either as a module or as a JAR. Just clone the project and get going!
 
 ## Components
 
 #### Data Extractor
 
-Data extractor is responsible for reading data from json,csv,excel, or sql tables. Before reading, the files are validated by the Data Validator.
+Data extractor is responsible for reading data from json, csv, excel, orc, parquet files or sql tables.
 
-#### Data Validator
+#### Meta Validator
 
-Data Validator validates the incoming file if it:
+MetaValidator validates the incoming file if it:
 <ul>
 <li>Exists</li>
 <li>Is of the right type</li>
@@ -31,7 +32,7 @@ Data Validator validates the incoming file if it:
 
 #### Data Transformation
 
-This is where all the the business logic of data transformations happen. Any custom transformation you need should go in here as methods.
+This is where all the the business logic of data transformations happen. Any custom transformation you need should be added to the ```DataTransformerImpl``` class and its method signature added to the parent interface. If you are consuming this project as a jar, you should be extending the ```DataTransformerImpl``` class
 
 #### Reporter
 
@@ -43,42 +44,51 @@ This is where the calculated result is written to a file in output directory. Yo
 <li>EXCEL</li>
 <li>PARQUET</li>
 <li>ORC</li> 
-<li>SQL Tables (Most common databases athat have APIs to connect with Java code)</li>  
+<li>SQL Tables (Most common databases that have APIs to connect with Java code)</li>  
 </ul>
 
 #### Validator
 
-This is where the comparison of two datasets happen. I have provided two ways to compare datasets
+Validator contains all the useful assertion methods for comparing datasets, asserting row count, schema etc. I have provided two ways to compare datasets
 <ul>
 <li>Compare data row by row</li>
 <li>Compare data column by column</li>
 </ul>
 
-In both the cases, I show the reports with the primary key so that it will be easier to know which records have mismatch between source and target.
+#### External Data Handling
 
-#### Orchestration
+ETL Validator provides external data support through its json interface ```ETLDataHandler```. Be sure to call its setInstance method with your JSON Data so that the ETL Validator gets all the external data it will need access to.
 
-All this is orchestrated by the Orchestrator class which orchestrates the *'ETL'* process.
+#### ETLStepDefinitions
 
-## Guice Injection
+This class contains commonly used data manipulation step definitions like:
 
-#### App Module
+<ul>
+<li>Reading data from files or databases</li>
+<li>Compare data</li>
+<li>Perform any transformations on data</li>
+<li>Write results back to files or databases</li>
+</ul>
 
-the App module class is responsible for the Guice binding of the ETL interfaces to their implementation. It also takes care of the named binding of the properties from config.properties class
-
-#### ETLEngine
-
-This is the main class that provides Guice injection to the Orchestrator and triggers the ETL process.
-
+Apart from existing step definitions, this class can be extended in your automation framework and additional steps can be added
 ____________________________________________________________________________________________________________________________________
 
 ## Sample Project Demo
-**ETL**
-Takes two input files one json and another csv. Merges the two based on the id field and groups the amount for each of the transaction codes. Shows the sum only if the code is specifically "CGDLT" or CGDST". Shows null otherwise
+**Test.feature**
 
-**Validation**
-We validate this transformation by comparing the result with an expected file **expected.json**
+The Test.feature contains a sample scenario that tests an ETL process, where a json file is being merged with a csv file and a filter transformation is being applied on it.
+Then we validate the result data set with an expected json file.
 
 ## Usage
 
-Run the ETLEngine class
+### As a standalone project
+Run the FunctionalCukesTest class under src/test/java after uncommenting the constructor class within ETLStepDefinitions.java
+
+### As an external integration
+1. Consume the jar in your test automation framework using build tools like maven, gradle, sbt or add the jar as dependency to your project
+2. Setup the ETL instance by calling
+
+    ```ETLDataHandler.setInstance(<your queries file as json string>);```
+    
+    from your test setup method or test hooks methods. It takes as parameter, all your queries converted into json string. This json data structure is what feeds all the external query data to the tool.
+3. For Cucumber based projects, it is recommended to add this line to your before all or before hooks and specify an exclusive tagged hook for running etl tests. That way, your web or api tests will not be interrupted or affected by this etl integration
