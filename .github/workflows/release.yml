@@ -4,9 +4,8 @@
 name: Tagged Release
 
 on:
-  push:
-    tags:
-      - "release"
+  release:
+    types: [prereleased]
 
 jobs:
   tagged-release:
